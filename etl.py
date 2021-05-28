@@ -107,7 +107,7 @@ def insert_user_and_songplays_data(cur, df, user_df):
 
         # insert songplay record (start_time, user_id, level, song_id, artist_id, location, user_agent) 
         # row["ts"], row["userId"], row["level"], row["sessionId"], row["location"], row["userAgent"])
-        songplay_data = (row["ts"], row["userId"], row["level"], songid, artistid, row["location"], row["userAgent"])
+        songplay_data = (row["ts"], row["userId"], row["level"], songid, artistid, row["sessionId"], row["location"], row["userAgent"])
         cur.execute(songplay_table_insert, songplay_data)
 
 

@@ -10,13 +10,14 @@ time_table_drop = "DROP TABLE IF EXISTS time;"
 
 songplay_table_create = """
     CREATE TABLE songplays (songplay_id SERIAL PRIMARY KEY,
-                            start_time TIMESTAMP,
-                            user_id int,
+                            start_time TIMESTAMP NOT NULL,
+                            user_id int NOT NULL,
                             level varchar,
                             song_id varchar,
                             artist_id varchar,
-                            location varchar,
-                            user_agent text)
+                            session_id int NOT NULL,
+                            location varchar NOT NULL,
+                            user_agent text NOT NULL)
 """
 
 user_table_create = """
@@ -56,8 +57,8 @@ time_table_create = """
 # INSERT RECORDS
 
 songplay_table_insert = """
-    INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, location, user_agent) 
-    VALUES (%s, %s, %s, %s, %s, %s, %s)
+    INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) 
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
 """
 
 user_table_insert = """
