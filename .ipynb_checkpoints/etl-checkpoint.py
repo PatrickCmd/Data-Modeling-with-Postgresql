@@ -33,12 +33,8 @@ def insert_song_data(cur, song_data):
 def insert_artists_data(cur, artist_data):
     """Load artist data into the artist table"""
     # insert artist record
-    # check if artist already exists
-    cur.execute(artist_select, tuple(artist_data["artist_id"].values))
-    artist = cur.fetchone()
-    if not artist:
-        artist_data = list(artist_data.values[0]) 
-        cur.execute(artist_table_insert, artist_data)
+    artist_data = list(artist_data.values[0]) 
+    cur.execute(artist_table_insert, artist_data)
         
 
 def ts_to_datetime(timestamp):
@@ -84,13 +80,8 @@ def insert_time_data(cur, time_df):
 
 def insert_user_and_songplays_data(cur, df, user_df):
     """Load user and songplay data into users and songplays tables respectively"""
-    # insert user records if not already exists
+    # insert user records updating level field if already exists
     for i, row in user_df.iterrows():
-        cur.execute(user_select, (row["userId"], ))
-        user = cur.fetchone()
-        if user:
-            # print("Skipping insertion of already existing user!")
-            continue
         cur.execute(user_table_insert, list(row))
 
     # insert songplay records

@@ -21,37 +21,37 @@ songplay_table_create = """
 """
 
 user_table_create = """
-    CREATE TABLE users (user_id int,
-                        first_name varchar,
-                        last_name varchar,
-                        gender varchar,
-                        level varchar)
+    CREATE TABLE users (user_id int PRIMARY KEY,
+                        first_name varchar NOT NULL,
+                        last_name varchar NOT NULL,
+                        gender varchar NOT NULL,
+                        level varchar NOT NULL)
 """
 
 song_table_create = """
-    CREATE TABLE songs (song_id varchar,
-                        title varchar,
-                        artist_id varchar,
-                        year int,
-                        duration numeric)
+    CREATE TABLE songs (song_id varchar PRIMARY KEY,
+                        title varchar NOT NULL,
+                        artist_id varchar NOT NULL,
+                        year int NOT NULL,
+                        duration numeric NOT NULL)
 """
 
 artist_table_create = """
-    CREATE TABLE artists (artist_id varchar,
-                          name varchar,
-                          location varchar,
-                          latitude numeric,
-                          longtitude numeric)
+    CREATE TABLE artists (artist_id varchar PRIMARY KEY,
+                          name varchar NOT NULL,
+                          location varchar NOT NULL,
+                          latitude numeric NOT NULL,
+                          longtitude numeric NOT NULL)
 """
 
 time_table_create = """
-    CREATE TABLE time (start_time TIMESTAMP,
-                       hour int,
-                       day int,
-                       week int,
-                       month int,
-                       year int,
-                       weekday int)
+    CREATE TABLE time (start_time TIMESTAMP PRIMARY KEY,
+                       hour int NOT NULL,
+                       day int NOT NULL,
+                       week int NOT NULL,
+                       month int NOT NULL,
+                       year int NOT NULL,
+                       weekday int NOT NULL)
 """
 
 # INSERT RECORDS
@@ -64,22 +64,31 @@ songplay_table_insert = """
 user_table_insert = """
     INSERT INTO users (user_id, first_name, last_name, gender, level) 
     VALUES (%s, %s, %s, %s, %s)
+    ON CONFLICT (user_id)
+    DO UPDATE
+        SET level = EXCLUDED.level
 """
 
 song_table_insert = """
     INSERT INTO songs (song_id, title, artist_id, year, duration) 
     VALUES (%s, %s, %s, %s, %s)
+    ON CONFLICT (song_id)
+    DO NOTHING
 """
 
 artist_table_insert = """
     INSERT INTO artists (artist_id, name, location, latitude, longtitude) 
     VALUES (%s, %s, %s, %s, %s)
+    ON CONFLICT (artist_id)
+    DO NOTHING
 """
 
 
 time_table_insert = """
     INSERT INTO time (start_time, hour, day, week, month, year, weekday) 
     VALUES (%s, %s, %s, %s, %s, %s, %s)
+    ON CONFLICT (start_time)
+    DO NOTHING
 """
 
 # FIND SONGS
